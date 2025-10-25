@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕉️ Shiv Chanting Portal 🕉️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="main-title">🙏 सांब सदाशिव 🙏</h1>
+        <div class="mantra-text">
+            <p>ॐ नमः शिवाय</p>
+            <p>हर हर महादेव</p>
+        </div>
+        <div class="timer-section">
+            <span class="timer-icon">⏱️</span>
+            <span class="timer-display" id="timerDisplay">00:00:00</span>
+            <button class="timer-control-btn" id="timerControlBtn">⏸️</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Central Progress Circle -->
+        <div class="progress-circle-container">
+            <div class="progress-circle">
+                <svg class="progress-ring" width="250" height="250">
+                    <circle class="progress-ring-background" 
+                            stroke="rgba(255, 165, 0, 0.1)" 
+                            stroke-width="10" 
+                            fill="transparent" 
+                            r="110" 
+                            cx="125" 
+                            cy="125"/>
+                    <circle class="progress-ring-circle" 
+                            stroke="#ffa500" 
+                            stroke-width="10" 
+                            fill="transparent" 
+                            r="110" 
+                            cx="125" 
+                            cy="125"/>
+                </svg>
+                <div class="circle-content">
+                    <div class="jap-count" id="japCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Cards -->
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="card-icon pink">✨</div>
+                <div class="card-label">Malas</div>
+                <div class="card-value" id="malasCount">1</div>
+            </div>
+            <div class="info-card">
+                <div class="card-icon purple">🕉️</div>
+                <div class="card-label">Total Japa</div>
+                <div class="card-value" id="totalJapa">0</div>
+            </div>
+            <div class="info-card">
+                <div class="card-icon blue">🔵</div>
+                <div class="card-label">Today's Japa</div>
+                <div class="card-value" id="todayJapa">0</div>
+            </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-buttons">
+            <div class="main-buttons">
+                <button class="reset-btn" id="resetBtn">Reset</button>
+            </div>
+            <button class="fullscreen-btn" id="fullscreenBtn">⛶ Fullscreen</button>
+        </div>
+    </main>
+
+    <!-- Audio Elements -->
+    <audio id="mantraAudio" loop autoplay>
+        <source src="audio/sambhsadashiv.mp3/shivmantra.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Bell Sound for Completion -->
+    <audio id="bell-sound" preload="auto">
+        <source src="bell.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

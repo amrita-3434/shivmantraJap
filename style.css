@@ -1,0 +1,476 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+    min-height: 100vh;
+    color: #ffffff;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.main-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.mantra-text {
+    margin-bottom: 1rem;
+}
+
+.mantra-text p {
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 400;
+    margin: 0.3rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.timer-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.timer-icon {
+    font-size: 1.2rem;
+}
+
+.timer-display {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.timer-control-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer-control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.timer-control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    position: relative;
+    z-index: 1;
+    gap: 2rem;
+}
+
+/* Progress Circle */
+.progress-circle-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.progress-circle {
+    position: relative;
+    width: 250px;
+    height: 250px;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+    width: 250px;
+    height: 250px;
+}
+
+.progress-ring-background {
+    stroke: rgba(255, 165, 0, 0.15);
+    stroke-width: 10;
+    fill: transparent;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.progress-ring-circle {
+    stroke-dasharray: 706.86;
+    stroke-dashoffset: 706.86;
+    transition: stroke-dashoffset 0.5s ease-in-out;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #ffa500;
+    vector-effect: non-scaling-stroke;
+}
+
+.circle-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.jap-count {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    line-height: 1;
+}
+
+/* Info Cards */
+.info-cards {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1rem;
+    text-align: center;
+    min-width: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.card-icon.pink {
+    color: #ff69b4;
+}
+
+.card-icon.purple {
+    color: #8a2be2;
+}
+
+.card-icon.blue {
+    color: #00bfff;
+}
+
+.card-label {
+    font-size: 0.8rem;
+    color: #b8c5d6;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+}
+
+.card-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Control Buttons */
+.control-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.main-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.reset-btn {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    border: none;
+    border-radius: 25px;
+    padding: 1rem 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    min-width: 120px;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+.fullscreen-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.fullscreen-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Completion Animation */
+.jap-count.completed {
+    animation: celebration 1s ease-in-out;
+    color: #f39c12;
+}
+
+@keyframes celebration {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+        color: #f39c12;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .mantra-text p {
+        font-size: 1rem;
+    }
+    
+    .progress-circle {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .progress-ring {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .progress-ring-background,
+    .progress-ring-circle {
+        r: 100;
+        cx: 110;
+        cy: 110;
+    }
+    
+    .jap-count {
+        font-size: 2.5rem;
+    }
+    
+    .info-cards {
+        gap: 0.8rem;
+    }
+    
+    .info-card {
+        min-width: 80px;
+        padding: 0.8rem;
+    }
+    
+    .card-icon {
+        font-size: 1.2rem;
+    }
+    
+    .card-label {
+        font-size: 0.7rem;
+    }
+    
+    .card-value {
+        font-size: 1rem;
+    }
+    
+    .main-buttons {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .reset-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        min-width: 120px;
+    }
+    
+    .timer-control-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.5rem;
+    }
+    
+    .progress-circle {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .progress-ring {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .progress-ring-background,
+    .progress-ring-circle {
+        r: 90;
+        cx: 100;
+        cy: 100;
+    }
+    
+    .jap-count {
+        font-size: 2rem;
+    }
+    
+    .info-cards {
+        gap: 0.5rem;
+    }
+    
+    .info-card {
+        min-width: 70px;
+        padding: 0.6rem;
+    }
+    
+    .card-icon {
+        font-size: 1rem;
+    }
+    
+    .card-label {
+        font-size: 0.6rem;
+    }
+    
+    .card-value {
+        font-size: 0.9rem;
+    }
+    
+    .reset-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        min-width: 100px;
+    }
+    
+    .timer-control-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Fade-in Animation */
+.progress-circle-container {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInScale 1s ease forwards 0.3s;
+}
+
+.info-cards {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards 0.5s;
+}
+
+.control-buttons {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards 0.7s;
+}
+
+.header {
+    opacity: 0;
+    transform: translateY(-30px);
+    animation: fadeInDown 0.8s ease forwards;
+}
+
+@keyframes fadeInScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
