@@ -8,15 +8,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Audio Control Button -->
+    <button class="audio-control-btn" id="audioControlBtn">🔊</button>
+    
+    <!-- Mantra Selector Button -->
+    <button class="mantra-selector-btn" id="mantraSelectorBtn" title="Select Mantra">
+        <span class="mantra-selector-label" id="mantraSelectorLabel">सांब सदाशिव</span>
+        <span class="mantra-selector-arrow" id="mantraSelectorArrow">▾</span>
+    </button>
+
     <!-- Header Section -->
     <header class="header">
-        <h1 class="main-title">🙏 सांब सदाशिव 🙏</h1>
-        <div class="mantra-text">
-            <p>ॐ नमः शिवाय</p>
-            <p>हर हर महादेव</p>
-        </div>
+        <h1 class="main-title">
+            <span class="namaste-emoji">🙏</span>
+            <span class="title-text">सांब सदाशिव</span>
+            <span class="namaste-emoji">🙏</span>
+        </h1>
+        
         <div class="timer-section">
-            <span class="timer-icon">⏱️</span>
             <span class="timer-display" id="timerDisplay">00:00:00</span>
             <button class="timer-control-btn" id="timerControlBtn">⏸️</button>
         </div>
@@ -51,17 +60,17 @@
 
         <!-- Bottom Cards -->
         <div class="info-cards">
-            <div class="info-card">
+            <div class="info-card" data-card="malas">
                 <div class="card-icon pink">✨</div>
                 <div class="card-label">Malas</div>
                 <div class="card-value" id="malasCount">1</div>
             </div>
-            <div class="info-card">
+            <div class="info-card" data-card="total">
                 <div class="card-icon purple">🕉️</div>
                 <div class="card-label">Total Japa</div>
                 <div class="card-value" id="totalJapa">0</div>
             </div>
-            <div class="info-card">
+            <div class="info-card" data-card="today">
                 <div class="card-icon blue">🔵</div>
                 <div class="card-label">Today's Japa</div>
                 <div class="card-value" id="todayJapa">0</div>
@@ -75,18 +84,42 @@
             </div>
             <button class="fullscreen-btn" id="fullscreenBtn">⛶ Fullscreen</button>
         </div>
+
+        <!-- Data Analysis Section -->
+        <div class="data-analysis-section">
+            <h3 class="data-analysis-title">📊 Data Analysis</h3>
+            <table class="mantra-data-table">
+                <thead>
+                    <tr>
+                        <th>Mantra</th>
+                        <th>Total Japa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>सांब सदाशिव</td>
+                        <td id="totalJapaSambh">0</td>
+                    </tr>
+                    <tr>
+                        <td>ॐ नमः शिवाय</td>
+                        <td id="totalJapaOmNamah">0</td>
+                    </tr>
+                    <tr>
+                        <td>ॐ</td>
+                        <td id="totalJapaOm">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <!-- Audio Elements -->
-    <audio id="mantraAudio" loop autoplay>
-        <source src="audio/sambhsadashiv.mp3/shivmantra.mp3" type="audio/mpeg">
+    <audio id="mantraAudio" loop autoplay muted>
+        <source src="shivmantra/sambhshadashiv.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Bell Sound for Completion -->
-    <audio id="bell-sound" preload="auto">
-        <source src="bell.mp3" type="audio/mpeg">
-    </audio>
+    
 
     <script src="script.js"></script>
 </body>

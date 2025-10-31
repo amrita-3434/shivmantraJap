@@ -14,6 +14,81 @@ body {
     position: relative;
 }
 
+/* Audio Control Button */
+.audio-control-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.audio-control-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.audio-control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Mantra Selector Button */
+.mantra-selector-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px; /* Move to right corner */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px; /* Box/pill shape */
+    height: 50px;
+    padding: 0 14px; /* Box padding */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.mantra-selector-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mantra-selector-btn:active {
+    transform: translateY(0);
+}
+
+/* Mantra selector content */
+.mantra-selector-label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.mantra-selector-arrow {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
 /* Header Styles */
 .header {
     text-align: center;
@@ -25,14 +100,28 @@ body {
 .main-title {
     font-size: 2.2rem;
     font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.title-text {
     background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientShift 3s ease-in-out infinite;
-    margin-bottom: 1rem;
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.namaste-emoji {
+    font-size: 2.5rem;
+
+
 }
 
 @keyframes gradientShift {
@@ -44,16 +133,15 @@ body {
     }
 }
 
-.mantra-text {
-    margin-bottom: 1rem;
-}
-
-.mantra-text p {
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 400;
-    margin: 0.3rem 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+@keyframes emojiGlow {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        transform: scale(1);
+    }
+    100% {
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1));
+        transform: scale(1.05);
+    }
 }
 
 .timer-section {
@@ -76,6 +164,14 @@ body {
     padding: 0.3rem 0.8rem;
     border-radius: 15px;
     backdrop-filter: blur(10px);
+    display: inline-flex;
+    align-items: center;
+}
+
+.timer-display::before {
+    content: '⏱️';
+    margin-right: 0.4rem;
+    font-size: 1.1rem;
 }
 
 .timer-control-btn {
@@ -149,7 +245,7 @@ body {
     transition: stroke-dashoffset 0.5s ease-in-out;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke: #ffa500;
+    stroke: #1cec61;
     vector-effect: non-scaling-stroke;
 }
 
@@ -280,6 +376,82 @@ body {
     transform: translateY(-2px);
 }
 
+/* Data Analysis Section */
+.data-analysis-section {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background: #ffffff; /* White background as requested */
+    color: #111827; /* Dark text for contrast */
+    border-radius: 20px;
+    border: 1px solid rgba(17, 24, 39, 0.1); /* subtle gray */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.data-analysis-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f3460; /* Deep blue for readability on white */
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.mantra-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+.mantra-data-table thead {
+    background: #f3f4f6; /* light gray header */
+    border-radius: 10px 10px 0 0;
+}
+
+.mantra-data-table th {
+    padding: 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1f2937; /* slate-800 */
+    border-bottom: 2px solid #e5e7eb; /* light gray */
+}
+
+.mantra-data-table th:last-child {
+    text-align: right;
+}
+
+.mantra-data-table tbody tr {
+    border-bottom: 1px solid #e5e7eb; /* light gray */
+    transition: all 0.3s ease;
+}
+
+.mantra-data-table tbody tr:hover {
+    background: #f9fafb; /* subtle light */
+}
+
+.mantra-data-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.mantra-data-table td {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    color: #374151; /* slate-700 */
+}
+
+.mantra-data-table td:first-child {
+    font-weight: 600;
+    color: #111827; /* near-black for row label */
+}
+
+.mantra-data-table td:last-child {
+    text-align: right;
+    font-weight: 700;
+    color: #0f3460; /* deep blue value */
+    font-size: 1rem;
+}
+
 /* Completion Animation */
 .jap-count.completed {
     animation: celebration 1s ease-in-out;
@@ -303,6 +475,14 @@ body {
 @media (max-width: 768px) {
     .main-title {
         font-size: 1.8rem;
+    }
+    
+    .title-text {
+        font-size: 1.8rem;
+    }
+    
+    .namaste-emoji {
+        font-size: 2rem;
     }
     
     .mantra-text p {
@@ -367,11 +547,57 @@ body {
         height: 35px;
         font-size: 1rem;
     }
+    
+    .audio-control-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+        top: 15px;
+        left: 15px;
+    }
+    
+    .mantra-selector-btn {
+        height: 45px;
+        font-size: 0.9rem;
+        top: 15px;
+        right: 15px; /* Keep at right on mobile */
+        padding: 0 12px;
+        gap: 8px;
+    }
+    
+    .data-analysis-section {
+        max-width: 100%;
+        padding: 1.2rem;
+        margin-top: 0.8rem;
+    }
+    
+    .data-analysis-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .mantra-data-table th,
+    .mantra-data-table td {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .mantra-data-table td:last-child {
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
     .main-title {
         font-size: 1.5rem;
+    }
+    
+    .title-text {
+        font-size: 1.5rem;
+    }
+    
+    .namaste-emoji {
+        font-size: 1.8rem;
     }
     
     .progress-circle {
@@ -426,6 +652,43 @@ body {
         width: 32px;
         height: 32px;
         font-size: 0.9rem;
+    }
+    
+    .audio-control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .mantra-selector-btn {
+        height: 40px;
+        font-size: 0.85rem;
+        top: 10px;
+        right: 10px; /* Keep at right on small mobile */
+        padding: 0 10px;
+        gap: 6px;
+    }
+    
+    .data-analysis-section {
+        padding: 1rem;
+        margin-top: 0.5rem;
+    }
+    
+    .data-analysis-title {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .mantra-data-table th,
+    .mantra-data-table td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+    
+    .mantra-data-table td:last-child {
+        font-size: 0.85rem;
     }
 }
 
