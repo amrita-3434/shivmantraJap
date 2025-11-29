@@ -20,6 +20,7 @@ class ShivChantingApp {
         this.isManuallyMuted = false; // Track manual mute state
         this.isManuallyPaused = false; // Track manual timer pause state (mantra-specific)
         this.wasTimerRunningBeforeLeave = false; // Track if timer was running before leaving site
+        this.hasStartedTimer = false; // Track if timer has been started by user tap
         
         // Mantra data structure
         this.mantras = {
@@ -52,18 +53,13 @@ class ShivChantingApp {
     init() {
         this.setupEventListeners();
         this.updateDisplay();
-        this.updateTimerDisplay(); // Display loaded timer state
+        this.updateTimerDisplay(); // Display loaded timer state (shows 00:00:00 initially)
         this.updateTimerButton(); // Set initial button state
         this.updateAudioButton(); // Set initial audio button state
         this.updateMantraDisplay(); // Update mantra display
         
-        // Start timer only if not paused
-        if (!this.timerPaused) {
-            this.startAutoTimer();
-        } else {
-            // If paused, make sure display shows correct state
-            this.updateTimerButton();
-        }
+        // Don't start timer automatically - wait for first user tap
+        // Timer will start on first screen tap
         
         // Start background audio when page loads (respect manual mute state)
         if (!this.isManuallyMuted) {
@@ -181,6 +177,12 @@ class ShivChantingApp {
 
     // Setup all event listeners
     setupEventListeners() {
+        // Hamburger menu
+        this.setupHamburgerMenu();
+        
+        // Navigation links
+        this.setupNavigationLinks();
+        
         // Reset button
         const resetBtn = document.getElementById('resetBtn');
         resetBtn.addEventListener('click', (e) => {
@@ -233,7 +235,7 @@ class ShivChantingApp {
 				!e.target.closest('.mantra-selector-btn') &&
 				!e.target.closest('.info-card') &&
 				!e.target.closest('.data-analysis-section')) {
-				this.incrementCount();
+				this.incrementCount(e);
 			}
 		});
 
@@ -279,33 +281,377 @@ class ShivChantingApp {
 
         // Reset daily count at midnight
         this.setupDailyReset();
+        
+        // Recalculate progress circle on window resize (for responsive radius changes)
+        window.addEventListener('resize', () => {
+            this.updateProgressCircle();
+        });
+    }
+
+    // Setup hamburger menu functionality
+    setupHamburgerMenu() {
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
+        
+        if (hamburgerMenu && navLinks) {
+            hamburgerMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleHamburgerMenu();
+            });
+            
+            // Close menu when clicking overlay
+            if (navOverlay) {
+                navOverlay.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        this.closeHamburgerMenu();
+                    }
+                });
+            }
+            
+            // Close menu when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    if (navLinks.classList.contains('active') && 
+                        !navLinks.contains(e.target) && 
+                        !hamburgerMenu.contains(e.target)) {
+                        this.closeHamburgerMenu();
+                    }
+                }
+            });
+            
+            // Close menu when a nav link is clicked on mobile
+            const navLinksItems = navLinks.querySelectorAll('.nav-link');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        this.closeHamburgerMenu();
+                    }
+                });
+            });
+            
+            // Close menu when window is resized from mobile to desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                    this.closeHamburgerMenu();
+                }
+            });
+        }
+    }
+    
+    // Toggle hamburger menu
+    toggleHamburgerMenu() {
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
+        
+        if (hamburgerMenu && navLinks) {
+            hamburgerMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            if (navOverlay) {
+                navOverlay.classList.toggle('active');
+            }
+        }
+    }
+    
+    // Close hamburger menu
+    closeHamburgerMenu() {
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
+        
+        if (hamburgerMenu && navLinks) {
+            hamburgerMenu.classList.remove('active');
+            navLinks.classList.remove('active');
+            if (navOverlay) {
+                navOverlay.classList.remove('active');
+            }
+        }
+    }
+
+    // Setup navigation links functionality
+    setupNavigationLinks() {
+        const homeLink = document.getElementById('homeLink');
+        const blogLink = document.getElementById('blogLink');
+        const homeSection = document.getElementById('homeSection');
+        const blogSection = document.getElementById('blogSection');
+        
+        // Home link - show home section
+        if (homeLink) {
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.showHomeSection();
+            });
+        }
+        
+        // Blog link - show blog section
+        if (blogLink) {
+            blogLink.addEventListener('click', (e) => {
+                // Only intercept click if in-page blog section exists; otherwise allow normal navigation
+                if (document.getElementById('blogSection')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.showBlogSection();
+                }
+            });
+        }
+        
+    }
+    
+    // Show home section
+    showHomeSection() {
+        const homeSection = document.getElementById('homeSection');
+        const blogSection = document.getElementById('blogSection');
+        const homeLink = document.getElementById('homeLink');
+        const blogLink = document.getElementById('blogLink');
+        
+        if (homeSection) {
+            homeSection.style.display = 'flex';
+            if (blogSection) blogSection.style.display = 'none';
+            
+            // Update active state
+            if (homeLink && blogLink) {
+                homeLink.classList.add('active');
+                blogLink.classList.remove('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+    
+    // Show blog section
+    showBlogSection() {
+        const homeSection = document.getElementById('homeSection');
+        const blogSection = document.getElementById('blogSection');
+        const homeLink = document.getElementById('homeLink');
+        const blogLink = document.getElementById('blogLink');
+        
+        if (homeSection && blogSection) {
+            homeSection.style.display = 'none';
+            blogSection.style.display = 'flex';
+            
+            // Update active state
+            if (homeLink && blogLink) {
+                homeLink.classList.remove('active');
+                blogLink.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 
     // Increment jap count
-    incrementCount() {
+    incrementCount(event = null) {
+        // Start timer on first tap if not started yet and not paused
+        if (!this.hasStartedTimer && !this.timerPaused) {
+            this.hasStartedTimer = true;
+            this.startAutoTimer();
+            console.log('⏰ Timer started on first tap');
+        }
+        
+        // Spread mantra name upward when tapped
+        this.spreadMantraName(event);
+        
         this.japCount++;
         this.totalJapa++;
         this.todayJapa++;
 
-        // Check if completed one mala (108)
-        if (this.japCount >= 108) {
-            this.handleMalaCompletion();
-        }
-
+        // Update display first to show 108
         this.updateDisplay();
         this.saveData();
+        
+        // Check if completed one mala (exactly at 108)
+        if (this.japCount === 108) {
+            // Show 108 for a moment, then handle completion
+            setTimeout(() => {
+                this.handleMalaCompletion();
+            }, 100); // Small delay to ensure 108 is visible
+        }
+        
         console.log(`Jap count: ${this.japCount}`);
     }
 
     // Handle mala completion
     handleMalaCompletion() {
         this.malasCount++;
-        this.japCount = 0; // Reset for next mala
         
-        this.updateDisplay();
-        this.saveData();
+        // Spread flowers immediately when 108 count happens
+        this.spreadFlowers();
+        
+        // Reset count to 0 after a delay (to show 108 for some time)
+        setTimeout(() => {
+            this.japCount = 0;
+            // Update display to show empty circle and 0 count
+            this.updateDisplay();
+            this.saveData();
+        }, 500); // Delay before resetting to 0
         
         console.log(`🎉 Completed ${this.malasCount} malas!`);
+    }
+
+    // Spread mantra name upward when screen is tapped
+    spreadMantraName(event = null) {
+        const currentMantraData = this.mantras[this.currentMantra];
+        if (!currentMantraData) return;
+
+        const mantraName = currentMantraData.name;
+        
+        // Get the tap position - use actual tap position if available, otherwise center
+        let tapX, tapY;
+        if (event && event.clientX && event.clientY) {
+            tapX = event.clientX;
+            tapY = event.clientY;
+        } else {
+            // Fallback to center if no event data
+            tapX = window.innerWidth / 2;
+            tapY = window.innerHeight / 2;
+        }
+
+        // Adjust font size based on mantra - smaller for longer mantras
+        // Also adjust for mobile screens
+        const screenWidth = window.innerWidth;
+        let fontSize;
+        
+        if (this.currentMantra === 'sambh-sadashiv' || this.currentMantra === 'om-namah-shivay') {
+            // Smaller for Sambh Sadashiv and Om Namah Shivay
+            if (screenWidth <= 480) {
+                fontSize = '1.2rem'; // Small mobile
+            } else if (screenWidth <= 768) {
+                fontSize = '1.4rem'; // Tablet
+            } else {
+                fontSize = '1.6rem'; // Desktop
+            }
+        } else {
+            // Keep larger size for Om (shorter text)
+            if (screenWidth <= 480) {
+                fontSize = '1.8rem'; // Small mobile
+            } else if (screenWidth <= 768) {
+                fontSize = '2rem'; // Tablet
+            } else {
+                fontSize = '2.5rem'; // Desktop
+            }
+        }
+
+        // Create mantra name element
+        const mantraElement = document.createElement('div');
+        mantraElement.className = 'mantra-spread-item';
+        mantraElement.textContent = mantraName;
+        
+        // Random horizontal offset for spreading effect
+        const randomOffset = (Math.random() - 0.5) * 200; // -100 to +100px
+        
+        mantraElement.style.cssText = `
+            position: fixed;
+            left: ${tapX}px;
+            top: ${tapY}px;
+            font-size: ${fontSize};
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.5);
+            z-index: 9999;
+            pointer-events: none;
+            white-space: nowrap;
+            transform: translate(-50%, -50%);
+            --start-x: 0px;
+            --start-y: 0px;
+            --end-x: ${randomOffset}px;
+            --end-y: -${window.innerHeight * 0.4}px;
+            --duration: 2000ms;
+            font-family: 'Poppins', sans-serif;
+        `;
+        
+        document.body.appendChild(mantraElement);
+        
+        // Remove element after animation completes
+        setTimeout(() => {
+            if (mantraElement.parentNode) {
+                mantraElement.parentNode.removeChild(mantraElement);
+            }
+        }, 2200);
+    }
+
+    // Spread flowers/leaves/beads around circle when 108 count completes
+    spreadFlowers() {
+        const progressCircle = document.querySelector('.progress-circle-container');
+        if (!progressCircle) return;
+
+        const circleRect = progressCircle.getBoundingClientRect();
+        const circleCenterX = circleRect.left + circleRect.width / 2;
+        const circleCenterY = circleRect.top + circleRect.height / 2;
+        const circleRadius = 125; // Circle radius
+
+        // Types of items: yellow flowers, leaves, and beads (15-16 items)
+        const itemTypes = ['🌼', '🌻', '🌼', '🌻', '🌼', '🌻', '🌼', '🌻', '🌼', '🌻', '🌼', '🌻', '🌼', '🌻', '🌼', '🌻'];
+        
+        // Total 15-16 items
+        const itemCount = 16;
+        
+        // Create and position items in a mala-like pattern (chain going upward)
+        for (let i = 0; i < itemCount; i++) {
+            // Starting from circle center/bottom, creating a mala chain pattern going upward
+            // Start position: around the circle (mostly from bottom)
+            const startAngle = -90 + (i * 60 / itemCount) * 6; // Spread from bottom in a wider arc
+            const startAngleRad = (startAngle * Math.PI) / 180;
+            
+            // Starting position on circle edge (from bottom area)
+            const startX = Math.cos(startAngleRad) * circleRadius;
+            const startY = Math.sin(startAngleRad) * circleRadius;
+            
+            // Mala pattern: create a flowing chain upward with slight curve
+            // Each item follows the previous one like beads in a garland
+            const baseUpwardDistance = 120 + (i * 15); // Progressive upward movement
+            const curveOffset = Math.sin(i * 0.3) * 40; // Slight wave/curve pattern
+            
+            // Calculate end position - flowing upward like a mala
+            const endX = startX + curveOffset + (Math.random() * 40 - 20); // Slight curve
+            const endY = startY - baseUpwardDistance - (i * 8); // Chain-like upward movement
+            
+            // Calculate middle positions for smooth continuous animation
+            const midX = startX + (endX - startX) * 0.2; // 20% position
+            const midY = startY + (endY - startY) * 0.2;
+            const mid2X = startX + (endX - startX) * 0.4; // 40% position
+            const mid2Y = startY + (endY - startY) * 0.4;
+            const mid3X = startX + (endX - startX) * 0.6; // 60% position for gradual fade
+            const mid3Y = startY + (endY - startY) * 0.6;
+            
+            // Create yellow flower element with bigger size
+            const item = document.createElement('div');
+            item.className = 'flower-item';
+            item.textContent = itemTypes[i];
+            const flowerSize = 36 + Math.random() * 16; // Bigger size (36-52px)
+            item.style.cssText = `
+                position: fixed;
+                left: ${circleCenterX}px;
+                top: ${circleCenterY}px;
+                font-size: ${flowerSize}px;
+                filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
+                z-index: 9999;
+                pointer-events: none;
+                --start-x: ${startX}px;
+                --start-y: ${startY}px;
+                --mid-x: ${midX}px;
+                --mid-y: ${midY}px;
+                --mid2-x: ${mid2X}px;
+                --mid2-y: ${mid2Y}px;
+                --mid3-x: ${mid3X}px;
+                --mid3-y: ${mid3Y}px;
+                --end-x: ${endX}px;
+                --end-y: ${endY}px;
+                --duration: ${1500 + Math.random() * 400}ms;
+            `;
+            
+            document.body.appendChild(item);
+            
+            // Remove element after animation completes (faster)
+            setTimeout(() => {
+                if (item.parentNode) {
+                    item.parentNode.removeChild(item);
+                }
+            }, 2200);
+        }
     }
 
     // Toggle audio mute/unmute
@@ -366,6 +712,11 @@ class ShivChantingApp {
     resumeTimer() {
         this.timerPaused = false;
         this.isManuallyPaused = false; // User manually resumed
+        
+        // Mark timer as started if not already started
+        if (!this.hasStartedTimer) {
+            this.hasStartedTimer = true;
+        }
         
         // Start timer if it's not already running
         if (!this.timerInterval) {
@@ -460,12 +811,23 @@ class ShivChantingApp {
         this.currentTime = 0;
         this.pausedTime = 0;
         this.timerPaused = false;
+        this.hasStartedTimer = false; // Reset timer start flag
+        this.stopTimer(); // Stop the timer interval
         this.updateTimerDisplay();
+        this.updateTimerButton();
         console.log('⏰ Timer reset');
     }
 
     // Update timer display
     updateTimerDisplay() {
+        // Always show 00:00:00 if timer hasn't started yet (and not manually paused)
+        // If manually paused, show the paused time
+        if (!this.hasStartedTimer && !this.isManuallyPaused) {
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.textContent = '00:00:00';
+            return;
+        }
+        
         const hours = Math.floor(this.currentTime / 3600);
         const minutes = Math.floor((this.currentTime % 3600) / 60);
         const seconds = this.currentTime % 60;
@@ -655,14 +1017,14 @@ class ShivChantingApp {
         this.pausedTime = newMantraData.pausedTime || 0;
         this.isManuallyPaused = newMantraData.isManuallyPaused || false;
         
+        // Reset timer start flag for new mantra (user needs to tap again)
+        this.hasStartedTimer = false;
+        
         // Update timer display
         this.updateTimerDisplay();
         this.updateTimerButton();
         
-        // Restart timer if it wasn't paused
-        if (!this.timerPaused) {
-            this.startAutoTimer();
-        }
+        // Don't auto-start timer - wait for first tap
         
         // Update display with new data
         this.updateMantraDisplay();
@@ -725,9 +1087,39 @@ class ShivChantingApp {
     // Update progress circle
     updateProgressCircle() {
         const circle = document.querySelector('.progress-ring-circle');
-        const radius = 110; // Updated radius for larger circle
+        if (!circle) return;
+        
+        // Get the actual radius based on screen size (matches CSS breakpoints)
+        // Desktop: 118, Tablet/Mobile (≤768px): 105, Small Mobile (≤480px): 95
+        let radius;
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 480) {
+            radius = 95;
+        } else if (screenWidth <= 768) {
+            radius = 105;
+        } else {
+            radius = 118;
+        }
+        
+        // Ensure radius attribute matches (for consistency)
+        if (circle.getAttribute('r') !== radius.toString()) {
+            circle.setAttribute('r', radius);
+        }
+        
         const circumference = radius * 2 * Math.PI;
+        
+        // Set strokeDasharray to the full circumference (required for animation)
+        circle.style.strokeDasharray = circumference;
+        
+        // Calculate progress: fill circle as count goes from 0 to 108
+        // When japCount is 0, progress is 0 (empty circle)
+        // When japCount is 108, progress is circumference (full circle)
         const progress = (this.japCount / 108) * circumference;
+        
+        // Set strokeDashoffset: 
+        // - When progress is 0, offset is circumference (empty)
+        // - When progress is circumference, offset is 0 (full circle)
+        circle.style.strokeDashoffset = circumference - progress;
         
         // Update stroke color based on progress
         if (this.japCount > 0) {
@@ -737,7 +1129,6 @@ class ShivChantingApp {
         }
         
         // Ensure smooth circular fill
-        circle.style.strokeDashoffset = circumference - progress;
         circle.style.strokeLinecap = 'round';
         circle.style.strokeLinejoin = 'round';
     }
@@ -883,6 +1274,14 @@ class ShivChantingApp {
             // Auto-resume timer if it was running before leaving and not manually paused
             if (this.wasTimerRunningBeforeLeave && !this.isManuallyPaused) {
                 this.timerPaused = false;
+                // Ensure timer is marked as started if it was running
+                if (!this.hasStartedTimer) {
+                    this.hasStartedTimer = true;
+                }
+                // Restart timer if needed
+                if (!this.timerInterval) {
+                    this.startAutoTimer();
+                }
                 console.log('▶️ Timer auto-resumed - page in foreground');
             } else if (this.isManuallyPaused) {
                 console.log('⏸️ Timer remains manually paused - user preference');

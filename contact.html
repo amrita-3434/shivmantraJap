@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - 🕉️ Shiv Mantra Counter 🕉️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-overlay" id="navOverlay"></div>
+        <div class="nav-container">
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="main-title">
+            <span class="namaste-emoji">🕉️</span>
+            <span class="title-text">Contact Us</span>
+            <span class="namaste-emoji">📿</span>
+        </h1>
+    </header>
+
+    <!-- Contact Section -->
+    <main class="main-container about-section">
+        <div class="blog-container">
+            <h2 class="blog-title">📧 Get In Touch</h2>
+            <div class="blog-content">
+                <p class="blog-text">We'd love to hear from you! Whether you have questions about Shiv Mantra Counter, need help with the application, want to share feedback, or have suggestions for improvements, we're here to help.</p>
+                
+                <div class="blog-posts">
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">💬 How Can We Help?</h3>
+                        <p class="blog-post-excerpt">Shiv Mantra Counter is designed to be simple and intuitive, but if you encounter any issues or have questions about how to use the app, we're ready to assist. Whether you need help understanding features, troubleshooting technical problems, or learning about privacy practices, feel free to reach out to us.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">📝 Share Your Feedback</h3>
+                        <p class="blog-post-excerpt">Your experience matters to us. If you have suggestions for new features, ideas for improvements, or feedback about your experience using Shiv Mantra Counter, we'd love to hear from you. Your input helps us make the app better for everyone on their spiritual journey.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">🔒 Privacy Questions</h3>
+                        <p class="blog-post-excerpt">Privacy is at the core of what we do. If you have questions about our Privacy Policy, concerns about data handling, or want to understand more about how we protect your spiritual practice data, please don't hesitate to contact us. We're committed to transparency and will respond to all privacy-related inquiries.</p>
+                    </div>
+                    
+                    <div class="blog-post-card contact-email-card">
+                        <h3 class="blog-post-title">📧 Email Us</h3>
+                        <p class="blog-post-excerpt">The best way to reach us is through email. Send us your questions, feedback, or concerns, and we'll get back to you as soon as possible.</p>
+                        <div class="contact-email">
+                            <a href="mailto:contact@shivmantracounter.com" class="email-link">contact@shivmantracounter.com</a>
+                        </div>
+                        <p class="blog-post-excerpt" style="margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7);">We typically respond within 24-48 hours. Thank you for your patience and understanding.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">🕉️ Spiritual Support</h3>
+                        <p class="blog-post-excerpt">While we can help with technical questions about the app, remember that Shiv Mantra Counter is a tool to support your spiritual practice. For guidance on Japa meditation, mantra meanings, or spiritual practices, we recommend consulting with qualified spiritual teachers or practitioners who can provide personalized guidance on your journey.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">🙏 Thank You</h3>
+                        <p class="blog-post-excerpt">Thank you for being part of the Shiv Mantra Counter community. Your practice, dedication, and feedback help make this application better for everyone. We're honored to support you on your spiritual path. May your journey bring you peace, focus, and spiritual fulfillment. 🙏</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="about.html" class="footer-link">About</a>
+                <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Om Namah Shivaya Mantra
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple navigation script for hamburger menu on contact page
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const navLinks = document.getElementById('navLinks');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            if (hamburgerMenu && navLinks) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    if (navOverlay) {
+                        navOverlay.classList.toggle('active');
+                    }
+                });
+                
+                if (navOverlay) {
+                    navOverlay.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            hamburgerMenu.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            navOverlay.classList.remove('active');
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

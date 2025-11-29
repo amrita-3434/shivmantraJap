@@ -8,6 +8,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-overlay" id="navOverlay"></div>
+        <div class="nav-container">
+            <img src="assets/images/Lordshiv.image.png" alt="Om Logo" class="logo-image">
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active" id="homeLink">Home</a>
+                <a href="blog.html" class="nav-link" id="blogLink">Blog</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Audio Control Button -->
     <button class="audio-control-btn" id="audioControlBtn">🔊</button>
     
@@ -31,8 +48,8 @@
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="main-container">
+    <!-- Home Section -->
+    <main class="main-container home-section" id="homeSection">
         <!-- Central Progress Circle -->
         <div class="progress-circle-container">
             <div class="progress-circle">
@@ -41,14 +58,14 @@
                             stroke="rgba(255, 165, 0, 0.1)" 
                             stroke-width="10" 
                             fill="transparent" 
-                            r="110" 
+                            r="118" 
                             cx="125" 
                             cy="125"/>
                     <circle class="progress-ring-circle" 
                             stroke="#ffa500" 
                             stroke-width="10" 
                             fill="transparent" 
-                            r="110" 
+                            r="118" 
                             cx="125" 
                             cy="125"/>
                 </svg>
@@ -61,7 +78,7 @@
         <!-- Bottom Cards -->
         <div class="info-cards">
             <div class="info-card" data-card="malas">
-                <div class="card-icon pink">✨</div>
+                <div class="card-icon pink">📿</div>
                 <div class="card-label">Malas</div>
                 <div class="card-value" id="malasCount">1</div>
             </div>
@@ -71,7 +88,7 @@
                 <div class="card-value" id="totalJapa">0</div>
             </div>
             <div class="info-card" data-card="today">
-                <div class="card-icon blue">🔵</div>
+                <div class="card-icon blue">🌸</div>
                 <div class="card-label">Today's Japa</div>
                 <div class="card-value" id="todayJapa">0</div>
             </div>
@@ -81,8 +98,8 @@
         <div class="control-buttons">
             <div class="main-buttons">
                 <button class="reset-btn" id="resetBtn">Reset</button>
+                <button class="fullscreen-btn" id="fullscreenBtn">⛶ Fullscreen</button>
             </div>
-            <button class="fullscreen-btn" id="fullscreenBtn">⛶ Fullscreen</button>
         </div>
 
         <!-- Data Analysis Section -->
@@ -113,6 +130,8 @@
         </div>
     </main>
 
+    
+
     <!-- Audio Elements -->
     <audio id="mantraAudio" loop autoplay muted>
         <source src="shivmantra/sambhshadashiv.mp3" type="audio/mpeg">
@@ -120,6 +139,20 @@
     </audio>
 
     
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="about.html" class="footer-link">About</a>
+                <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Om Namah Shivaya Mantra
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

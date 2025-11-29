@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - 🕉️ Shiv Mantra Counter 🕉️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-overlay" id="navOverlay"></div>
+        <div class="nav-container">
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1 class="main-title">
+            <span class="namaste-emoji">🕉️</span>
+            <span class="title-text">About Us</span>
+            <span class="namaste-emoji">📿</span>
+        </h1>
+    </header>
+
+    <!-- About Section -->
+    <main class="main-container about-section">
+        <div class="blog-container">
+            <h2 class="blog-title">📖 About Shiv Mantra Counter</h2>
+            <div class="blog-content">
+                <p class="blog-text">Welcome to Shiv Mantra Counter! This is a simple app to help you count your mantras and track your spiritual practice.</p>
+                
+                <div class="blog-posts">
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">🕉️ What Is This App?</h3>
+                        <p class="blog-post-excerpt">Shiv Mantra Counter is a tool to help you practice mantras every day. It helps you count how many times you chant a mantra. It keeps track of your daily practice and shows your progress. Whether you are just starting or have been practicing for a long time, this app will help you build a good habit of daily meditation.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">📿 What Can You Do Here?</h3>
+                        <p class="blog-post-excerpt">You can choose from three mantras: सांब सदाशिव, ॐ नमः शिवाय, and ॐ. The app counts how many times you chant. When you complete 108 times, that means you finished one mala. There is a timer to see how long you practiced. You can also listen to peaceful mantra audio while you practice. Everything you do is saved automatically, so you can see your progress anytime.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">🙏 How to Use This App</h3>
+                        <p class="blog-post-excerpt">It is very easy to use! Just tap anywhere on the screen to count each time you chant. As you count, you will see a circle filling up. When you reach 108 counts, you finish one mala and you will see a beautiful animation. You can change mantras anytime. You can start or stop the timer. You can turn the audio on or off. All your data is saved automatically, so when you come back later, everything is still there.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">📊 See Your Progress</h3>
+                        <p class="blog-post-excerpt">You can see how well you are doing! The app shows you your total count, how many times you practiced today, and how many malas you completed. There is a table that shows how many times you chanted each mantra. The timer helps you practice for a regular time every day. This helps you stay focused and build a good routine.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">🌺 Why Practice Mantras?</h3>
+                        <p class="blog-post-excerpt">Chanting mantras is an old practice that brings peace and calm. When you practice regularly, it helps you feel less stressed, more focused, and more connected to God. Mantra chanting is good for your mind and heart. Shiv Mantra Counter is here to help you practice every day and grow on your spiritual path.</p>
+                    </div>
+                    
+                    <div class="blog-post-card">
+                        <h3 class="blog-post-title">💝 Your Practice Matters</h3>
+                        <p class="blog-post-excerpt">Every time you chant a mantra, every mala you complete, and every day you practice is important. We believe that regular practice helps you stay connected to your inner peace. This app is here to help you on your journey. We hope it brings you peace, happiness, and spiritual growth. 🙏</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="about.html" class="footer-link">About</a>
+                <a href="privacy.html" class="footer-link">Privacy Policy</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Om Namah Shivaya Mantra
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple navigation script for hamburger menu on about page
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerMenu = document.getElementById('hamburgerMenu');
+            const navLinks = document.getElementById('navLinks');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            if (hamburgerMenu && navLinks) {
+                hamburgerMenu.addEventListener('click', () => {
+                    hamburgerMenu.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    if (navOverlay) {
+                        navOverlay.classList.toggle('active');
+                    }
+                });
+                
+                if (navOverlay) {
+                    navOverlay.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            hamburgerMenu.classList.remove('active');
+                            navLinks.classList.remove('active');
+                            navOverlay.classList.remove('active');
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

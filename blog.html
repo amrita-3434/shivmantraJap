@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog - 🕉️ Shiv Mantra Counter 🕉️</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<!-- Navigation Header -->
+	<nav class="nav-header">
+		<div class="nav-overlay" id="navOverlay"></div>
+		<div class="nav-container">
+			<button class="hamburger-menu" id="hamburgerMenu" aria-label="Menu">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+			<div class="nav-links" id="navLinks">
+				<a href="index.html" class="nav-link">Home</a>
+				<a href="blog.html" class="nav-link active">Blog</a>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Header Section -->
+	<header class="header">
+		<h1 class="main-title">
+			<span class="namaste-emoji">🕉️</span>
+			<span class="title-text">Blog</span>
+			<span class="namaste-emoji">📿</span>
+		</h1>
+	</header>
+
+	<!-- Blog Section -->
+	<main class="main-container blog-section">
+		<div class="blog-container">
+			<h2 class="blog-title">📝 The importance of Japa Mantra </h2>
+			<div class="blog-content">
+				<div class="blog-posts">
+					<div class="blog-post-card">
+						<h3 class="blog-post-title">🕉️ What is a Mantra?</h3>
+						<p class="blog-post-excerpt">A mantra is a sacred sound, word, or phrase repeated with attention and devotion. Its vibration purifies the mind, steadies the breath, and focuses awareness on the divine. Chanting aligns thought, speech, and prana, gradually transforming restlessness into peace.</p>
+					</div>
+
+					<div class="blog-post-card">
+						<h3 class="blog-post-title">🙏 Why Chant Mantras?</h3>
+						<p class="blog-post-excerpt">Regular japa cultivates concentration, softens inner chatter, and anchors the heart in devotion. It supports discipline, reduces stress, and turns every breath into prayer. Over time, the mantra becomes a gentle companion guiding you toward clarity and compassion.</p>
+					</div>
+
+					<div class="blog-post-card">
+						<h3 class="blog-post-title">🌸 The Importance of Mantra</h3>
+						<p class="blog-post-excerpt">Mantra practice is simple yet profound: it refines attention, uplifts emotion, and sanctifies daily life. With steady repetition, it reshapes habits, nourishes faith, and opens a quiet space within where peace naturally arises.</p>
+					</div>
+
+					<div class="blog-post-card">
+						<h3 class="blog-post-title">📿 Three Mantras in This App</h3>
+						<p class="blog-post-excerpt"><strong>1) सांब सदाशिव</strong> — A devotional invocation of Lord Shiva as the ever-auspicious, removing obstacles and inviting inner steadiness.</p>
+						<p class="blog-post-excerpt"><strong>2) ॐ नमः शिवाय</strong> — “I bow to Shiva.” A pañchākṣarī mantra that purifies ego, deepens humility, and reveals the Self as peaceful and pure.</p>
+						<p class="blog-post-excerpt"><strong>3) ॐ</strong> — The primordial sound. Meditating on Om harmonizes breath and mind, attuning awareness to the subtle presence of the divine.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer class="site-footer">
+		<div class="footer-content">
+			<div class="footer-links">
+				<a href="about.html" class="footer-link">About</a>
+				<a href="privacy.html" class="footer-link">Privacy Policy</a>
+				<a href="contact.html" class="footer-link">Contact</a>
+			</div>
+			<div class="footer-copyright">
+				© 2025 Om Namah Shivaya Mantra
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		// Simple navigation script for hamburger menu on blog page
+		document.addEventListener('DOMContentLoaded', () => {
+			const hamburgerMenu = document.getElementById('hamburgerMenu');
+			const navLinks = document.getElementById('navLinks');
+			const navOverlay = document.getElementById('navOverlay');
+			if (hamburgerMenu && navLinks) {
+				hamburgerMenu.addEventListener('click', () => {
+					hamburgerMenu.classList.toggle('active');
+					navLinks.classList.toggle('active');
+					if (navOverlay) {
+						navOverlay.classList.toggle('active');
+					}
+				});
+				if (navOverlay) {
+					navOverlay.addEventListener('click', () => {
+						if (window.innerWidth <= 768) {
+							hamburgerMenu.classList.remove('active');
+							navLinks.classList.remove('active');
+							navOverlay.classList.remove('active');
+						}
+					});
+				}
+			}
+		});
+	</script>
+</body>
+</html>
+
+
