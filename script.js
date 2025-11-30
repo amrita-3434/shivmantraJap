@@ -27,19 +27,19 @@ class ShivChantingApp {
             'sambh-sadashiv': {
                 name: 'सांब सदाशिव',
                 title: 'सांब सदाशिव',
-                audio: 'shivmantra/sambhshadashiv.mp3',
+                audio: 'assets/audio/sambhshadashiv.mp3',
                 icon: '🕉️'
             },
             'om-namah-shivay': {
                 name: 'ॐ नमः शिवाय',
                 title: 'ॐ नमः शिवाय',
-                audio: 'shivmantra/OmNamahShivay.mp3',
+                audio: 'assets/audio/OmNamahShivay.mp3',
                 icon: '🕉️'
             },
             'om': {
                 name: 'ॐ',
                 title: 'ॐ',
-                audio: 'shivmantra/Omchant.mp3',
+                audio: 'assets/audio/Omchant.mp3',
                 icon: '🕉️'
             }
         };
@@ -61,13 +61,28 @@ class ShivChantingApp {
         // Don't start timer automatically - wait for first user tap
         // Timer will start on first screen tap
         
-        // Start background audio when page loads (respect manual mute state)
+        // Load audio and prepare it (respect manual mute state)
+        const audio = document.getElementById('mantraAudio');
         if (!this.isManuallyMuted) {
-            this.playAudio();
+            // Preload and prepare audio, but don't autoplay (browser policy)
+            // Audio will start on first user interaction
+            audio.load();
+            audio.muted = false;
+            // Try to play, but don't force it (will work after user interaction)
+            audio.play().then(() => {
+                this.isPlaying = true;
+                this.updateAudioButton();
+                console.log('🎵 Audio started on page load');
+            }).catch(() => {
+                // Expected - browsers block autoplay, will play on first click
+                this.isPlaying = false;
+                this.updateAudioButton();
+                console.log('⏸️ Audio ready, waiting for user interaction');
+            });
         } else {
             // If manually muted, keep it muted
-            const audio = document.getElementById('mantraAudio');
             audio.muted = true;
+            audio.pause();
             this.isPlaying = false;
         }
         
@@ -662,32 +677,57 @@ class ShivChantingApp {
         const audio = document.getElementById('mantraAudio');
         const progressCircle = document.querySelector('.progress-circle');
 
-        if (audio.muted) {
-            // Unmute audio
-            audio.muted = false;
-            this.isManuallyMuted = false; // User manually unmuted
-            progressCircle.style.filter = 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8))';
-            // Ensure playback resumes after unmuting (e.g., after tab switch)
-            audio.play().then(() => {
-                this.isPlaying = true;
-                this.updateAudioButton();
-                console.log('🔊 Audio unmuted and playing');
-            }).catch(err => {
-                // If play fails due to policy, reflect unmuted state but not playing
-                this.isPlaying = !audio.paused;
-                this.updateAudioButton();
-                console.warn('Audio unmuted but could not start playback immediately:', err);
-            });
-        } else {
+        // Check if audio is currently playing (not paused and not muted)
+        const isCurrentlyPlaying = !audio.paused && !audio.muted && this.isPlaying;
+        
+        if (isCurrentlyPlaying || (!audio.muted && !this.isManuallyMuted)) {
             // Mute audio
+            audio.pause();
             audio.muted = true;
             this.isPlaying = false;
             this.isManuallyMuted = true; // User manually muted
             progressCircle.style.filter = 'drop-shadow(0 0 10px rgba(255, 107, 53, 0.5))';
             console.log('🔇 Audio muted');
+        } else {
+            // Unmute and play audio
+            this.isManuallyMuted = false; // User manually unmuted
+            audio.muted = false;
+            
+            // Ensure audio is loaded before playing
+            if (audio.readyState < 2) {
+                audio.load();
+            }
+            
+            // Play audio - handle promise properly
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    this.isPlaying = true;
+                    progressCircle.style.filter = 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8))';
+                    this.updateAudioButton();
+                    console.log('🔊 Audio unmuted and playing');
+                }).catch(err => {
+                    // If play fails, try loading first then playing
+                    audio.load();
+                    audio.play().then(() => {
+                        this.isPlaying = true;
+                        progressCircle.style.filter = 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8))';
+                        this.updateAudioButton();
+                        console.log('🔊 Audio unmuted and playing (after reload)');
+                    }).catch(err2 => {
+                        console.warn('Audio could not start playback:', err2);
+                        this.isPlaying = false;
+                        this.updateAudioButton();
+                    });
+                });
+            } else {
+                // Fallback for older browsers
+                this.isPlaying = !audio.paused;
+                this.updateAudioButton();
+            }
         }
         
-        // Button state may have already been updated above; keep this for consistency
         this.updateAudioButton();
         this.saveData(); // Save mute state
     }
@@ -736,16 +776,34 @@ class ShivChantingApp {
         const audio = document.getElementById('mantraAudio');
         const progressCircle = document.querySelector('.progress-circle');
 
+        // Ensure audio is loaded before playing
+        if (audio.readyState < 2) {
+            audio.load();
+        }
+        
         audio.muted = false; // Unmute audio
-        audio.play().then(() => {
-            this.isPlaying = true;
-            progressCircle.style.filter = 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8))';
-            this.updateAudioButton(); // Update button state
-            console.log('🎵 Playing Sambh Sadashiv');
-        }).catch(error => {
-            console.error('Error playing audio:', error);
-            this.showAudioError();
-        });
+        const playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                this.isPlaying = true;
+                progressCircle.style.filter = 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8))';
+                this.updateAudioButton(); // Update button state
+                console.log('🎵 Playing audio');
+            }).catch(error => {
+                // If play fails, try loading first
+                audio.load();
+                audio.play().then(() => {
+                    this.isPlaying = true;
+                    progressCircle.style.filter = 'drop-shadow(0 0 20px rgba(255, 107, 53, 0.8))';
+                    this.updateAudioButton();
+                    console.log('🎵 Playing audio (after reload)');
+                }).catch(err => {
+                    console.error('Error playing audio:', err);
+                    this.showAudioError();
+                });
+            });
+        }
     }
 
     // Pause audio
@@ -874,7 +932,40 @@ class ShivChantingApp {
         
         // Update audio source
         const audio = document.getElementById('mantraAudio');
+        const wasPlaying = !audio.paused && !audio.muted && this.isPlaying;
         audio.src = currentMantraData.audio;
+        
+        // Load and play the new audio if not manually muted
+        if (!this.isManuallyMuted) {
+            audio.load(); // Load the new source
+            audio.muted = false; // Ensure it's not muted
+            
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    this.isPlaying = true;
+                    this.updateAudioButton();
+                    console.log(`🎵 Playing ${currentMantraData.name}`);
+                }).catch(error => {
+                    // If play fails, try loading again
+                    audio.load();
+                    audio.play().then(() => {
+                        this.isPlaying = true;
+                        this.updateAudioButton();
+                        console.log(`🎵 Playing ${currentMantraData.name} (after reload)`);
+                    }).catch(err => {
+                        console.error('Error playing audio:', err);
+                        this.showAudioError();
+                    });
+                });
+            }
+        } else {
+            // If manually muted, keep it muted but load the new source
+            audio.load();
+            audio.muted = true;
+            audio.pause();
+            this.isPlaying = false;
+        }
         
         // Update mantra selector display (label + arrow)
         const mantraSelectorBtn = document.getElementById('mantraSelectorBtn');
