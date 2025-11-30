@@ -52,7 +52,7 @@ body {
 .logo-image {
     position: absolute;
     left: 2rem;
-    height: 70px;
+    height: 140px;
     width: auto;
     object-fit: contain;
     z-index: 2002;
@@ -1204,8 +1204,8 @@ body.article-page .blog-article-body li {
     }
     
     .logo-image {
-        height: 60px;
-        left: 1rem;
+        height: 120px;
+        left: 2rem;
     }
     
     .hamburger-menu {
@@ -1568,8 +1568,8 @@ body.article-page .blog-article-body li {
     }
     
     .logo-image {
-        height: 55px;
-        left: 0.8rem;
+        height: 110px;
+        left: 1rem;
     }
     
     .hamburger-menu {
