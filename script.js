@@ -304,6 +304,38 @@ class ShivChantingApp {
         window.addEventListener('resize', () => {
             this.updateProgressCircle();
         });
+        
+        // Detect scroll to section 2 and update button styles
+        this.setupSection2ScrollDetection();
+    }
+    
+    // Setup scroll detection for section 2
+    setupSection2ScrollDetection() {
+        const section2 = document.getElementById('section2');
+        if (!section2) return;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Section 2 is in view - add class to body
+                    document.body.classList.add('in-section2');
+                } else {
+                    // Section 2 is not in view - remove class from body
+                    document.body.classList.remove('in-section2');
+                }
+            });
+        }, {
+            threshold: 0.1 // Trigger when 10% of section 2 is visible
+        });
+        
+        observer.observe(section2);
+        
+        // Also check on initial load
+        const rect = section2.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (isVisible) {
+            document.body.classList.add('in-section2');
+        }
     }
 
     // Setup hamburger menu functionality
