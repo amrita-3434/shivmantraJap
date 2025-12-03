@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <!-- Home Page -->
     <url>
-        <loc>https://omnamahshivaymantra.in/index.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <loc>https://omnamahshivaymantra.in/</loc>
+        <lastmod>2025-11-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -11,23 +11,31 @@
     <!-- Blog Page -->
     <url>
         <loc>https://omnamahshivaymantra.in/blog.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <lastmod>2025-11-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
-    <!-- Article: Shiv Mantra -->
+    <!-- Article: The Power of Shiv Mantra -->
     <url>
-        <loc>https://omnamahshivaymantra.in/article-shiv-mantra.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <loc>https://omnamahshivaymantra.in/articles/article-shiv-mantra.html</loc>
+        <lastmod>2025-11-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
-    <!-- Article: Online Counter -->
+    <!-- Article: Online Shiv Mantra Jap Counter -->
     <url>
-        <loc>https://omnamahshivaymantra.in/article-online-counter.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <loc>https://omnamahshivaymantra.in/articles/article-online-counter.html</loc>
+        <lastmod>2025-11-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Article: Premanand Maharaj Naam Jaap -->
+    <url>
+        <loc>https://omnamahshivaymantra.in/articles/article-premanand-naam-jap.html</loc>
+        <lastmod>2025-11-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -35,7 +43,7 @@
     <!-- About Page -->
     <url>
         <loc>https://omnamahshivaymantra.in/about.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <lastmod>2025-11-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -43,7 +51,7 @@
     <!-- Contact Page -->
     <url>
         <loc>https://omnamahshivaymantra.in/contact.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <lastmod>2025-11-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -51,7 +59,7 @@
     <!-- Privacy Policy Page -->
     <url>
         <loc>https://omnamahshivaymantra.in/privacy.html</loc>
-        <lastmod>2025-01-27</lastmod>
+        <lastmod>2025-11-27</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
